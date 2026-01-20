@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>My Bio Slideshow</title>
+
+<style>
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+  }
+
+  body {
+    overflow: hidden;
+    background: #0b1320;
+    color: white;
+  }
+
+  /* Screen-reader only utility class */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .slider {
+    display: flex;
+    width: 400%;
+    height: 100vh;
+    transition: transform 0.9s ease-in-out;
+  }
+
+  .slide {
+    width: 100vw;
+    height: 100vh;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-size: cover;
+    background-position: center;
+  }
+
+  .slide:nth-child(1) { background-image: linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)), url('https://images.unsplash.com/photo-1501785888041-af3ef285b470'); }
+  .slide:nth-child(2) { background-image: linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)), url('https://images.unsplash.com/photo-1519681393784-d120267933ba'); }
+  .slide:nth-child(3) { background-image: linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)), url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b'); }
+  .slide:nth-child(4) { background-image: linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)), url('https://images.unsplash.com/photo-1500530855697-b586d89ba3ee'); }
+
+  img.profile {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 15px;
+    border: 4px solid white;
+  }
+
+  h1 { margin-bottom: 10px; font-size: 2.6rem; }
+  h2 { margin-bottom: 10px; }
+  p, li { max-width: 760px; line-height: 1.6; }
+
+  ul {
+    text-align: left;
+    margin-top: 10px;
+  }
+
+  .nav {
+    position: fixed;
+    bottom: 25px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  button {
+    padding: 10px 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    background: white;
+    color: black;
+    font-weight: bold;
+  }
+
+  button:hover {
+    opacity: 0.85;
+  }
+
+  .progress {
+    position: fixed;
+    top: 15px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #aaa;
+    transition: background 0.3s;
+  }
+
+  .dot.active {
+    background: white;
+  }
+
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+    max-width: 1000px;
+    margin-top: 25px;
+  }
+
+  .card {
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(8px);
+    border-radius: 18px;
+    padding: 20px 22px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+    text-align: left;
+  }
+
+  .card > ul {
+    margin-left: 18px;
+  }
+
+  .card h2 {
+    margin-bottom: 10px;
+    font-size: 1.4rem;
+    letter-spacing: 0.5px;
+  }
+
+  .card-container {
+    max-width: 1000px;
+    display: grid;
+    gap: 22px;
+    margin-top: 25px;
+  }
+
+  .card-container.single {
+    max-width: 720px;
+  }
+
+  .card ul ul {
+    margin-top: 6px;
+    margin-left: 20px;
+    list-style-type: circle;
+  }
+
+  .card ul li {
+    margin-bottom: 8px;
+  }
+</style>
+</head>
+
+<body>
+
+<main aria-label="Personal biography slideshow">
+
+  <div class="progress" role="tablist" aria-label="Slide progress">
+    <div class="dot active" role="tab" aria-selected="true"></div>
+    <div class="dot" role="tab" aria-selected="false"></div>
+    <div class="dot" role="tab" aria-selected="false"></div>
+    <div class="dot" role="tab" aria-selected="false"></div>
+  </div>
+
+  <div class="sr-only" aria-live="polite" id="slide-status">
+    Viewing slide 1 of 4
+  </div>
+
+  <div class="slider" id="slider">
+
+    <section class="slide" role="region" aria-roledescription="slide" aria-label="Profile slide">
+      <div class="card-container single">
+        <div class="card" style="text-align:center;">
+          <img class="profile" src="headshot.PNG" alt="Photo of Tate McAnelly in his cadet uniform" />
+          <h1>Tate McAnelly</h1>
+          <p>
+            Howdy! My name is Tate McAnelly. I am a senior Computer Science Major from Flower Mound, Texas (Near Dallas), and have the distinct priveledge of somehow graduating in only 4 years! This page will serve as a brief introduction to who I am, what my interests are, and
+            potentially what life has in store for me! Take a look around and get to know me a little better...
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" role="region" aria-roledescription="slide" aria-label="Hobbies and adventures slide">
+      <h1>Hobbies & Adventures</h1>
+      <p>
+        When I'm not coding or studying, I enjoy exploring the great outdoors and pushing my limits through various adventures. My dad and I are 
+        avid backpackers and skiers, and I also enjoy running and playing soccer. Here are some of my favorite activities and trips I've been on:
+      </p>
+
+      <div class="cards">
+        <div class="card">
+          <h2>Backpacking</h2>
+          <ul>
+            <li>Coming Soon! Weminuche Wilderness, Colorado; 100 Miles (2026)</li>
+            <li>John Muir Trail + Extra, California; 250 Miles (2023)</li>
+            <li>Weminuche Wilderness (Adjacent Section), Colorado; 100 Miles (2020)</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h2>Skiing</h2>
+          <ul>
+            <li>Coming Soon! Chile (2026)</li>
+            <li>Big Sky, Montana (2023, 2025)</li>
+            <li>Wolf Creek, Colorado (2024)</li>
+            <li>Purgatory, Colorado (2010-2024)</li>
+            <li>Mammoth Mountain, California (2018)</li>
+            <li>Whistler-Blackcomb, British Columbia, Canada (2013)</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h2>Running</h2>
+          <ul>
+            <li>Coming Soon! Cowtown Marathon (2026)</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h2>Soccer</h2>
+          <ul>
+            <li>Intramurals</li>
+            <li>High School</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" role="region" aria-roledescription="slide" aria-label="Career and involvement slide">
+      <h1>Career & Involvement</h1>
+
+      <div class="card-container">
+        <div class="card">
+          <p>
+            Since starting college, I've been blessed with the opportunity to try and experience a number of different avenues to devote my time. From 
+            extracurricular involvement to internships, I've tried to make the most of my time here at Texas A&M and prepare myself not just for my future career, but 
+            also as a man of character and integrity. Someday, I hope to provide for a family and lead them in a way that honors God. 
+            Here are some highlights on my journey so far:
+          </p>
+        </div>
+
+        <div class="card">
+          <h2>Current Involvement</h2>
+          <ul>
+            <li>Corps of Cadets' Squadron 17</li>
+            <li>First Baptist Bryan Kids Ministry (Volunteer not participant!)</li>
+            <li>First Baptist Bryan College Ministry (Participant)</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h2>Internships / Work experience</h2>
+          <ul>
+            <li>Incoming Associate Consultant at Bain & Company (2026)</li>
+            <li>Camp Counselor and Lifeguard at Pine Cove (2023 & 2026)</li>
+            <li>Digital Grid Operations Intern at Oncor Electric Delivery (2025)</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" role="region" aria-roledescription="slide" aria-label="Academic interests slide">
+      <h1>Academic Interests</h1>
+
+      <div class="card-container">
+        <div class="card">
+          <p>
+            Despite being a computer science major, I have a variety of interests both inside and outside the Computer Science realm that can be best described as a desire to understand the intersection of the Business World and modern technology: two worlds that are rapidly converging. 
+            Taking technical classes like Computer Organization and Hardware Design/Verification equip me to better understand our machines, while taking classes like Intro to Software Engineering and Computers and New Media help me incorporate my technical knowledge with the 
+            users that ultimately are impacted by the projects we create, which is why I signed up for Human-Computer Interaction as well. Furthermore, the more human-focused classes will equip me to understand the disparity between system capabilities and user needs while I am consulting clients in the business world. Understanding client systems enables me 
+            to make the most informed, and therefore beneficial, business decisions for the client. Below are some of my favorite academic interests:
+          </p>
+        </div>
+
+        <div class="card">
+          <h2>Favorite classes</h2>
+          <ul>
+            <li>
+              <strong>Technology-Oriented Classes</strong>
+              <ul>
+                <li>Computer Organization (CSCE 312)</li>
+                <li>Hardware Design and Verification (CSCE 416)</li>
+              </ul>
+            </li>
+
+            <li>
+              <strong>User-Oriented Classes</strong>
+              <ul>
+                <li>Intro to Software Engineering (CSCE 331)</li>
+                <li>Computers and New Media (CSCE 445)</li>
+                <li>Human-Computer Interaction (CSCE 436)</li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h2>Topics that excite me</h2>
+          <ul>
+            <li>Technology Disruptions</li>
+            <li>ML Applications</li>
+            <li>Business and Technology Consulting</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <nav class="nav" aria-label="Slideshow navigation">
+    <button onclick="prev()" aria-label="Go to previous slide">Previous</button>
+    <button onclick="next()" aria-label="Go to next slide">Next</button>
+  </nav>
+
+</main>
+
+<script>
+let index = 0;
+const total = 4;
+
+function update() {
+  const slider = document.getElementById('slider');
+  slider.style.transform = `translateX(-${index * 100}vw)`;
+
+  document.querySelectorAll('.dot').forEach((d, i) => {
+    d.classList.toggle('active', i === index);
+    d.setAttribute('aria-selected', i === index);
+  });
+
+  document.getElementById('slide-status').textContent =
+    `Viewing slide ${index + 1} of ${total}`;
+}
+
+function next() {
+  index = (index + 1) % total;
+  update();
+}
+
+function prev() {
+  index = (index - 1 + total) % total;
+  update();
+}
+
+window.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowRight') next();
+  if (e.key === 'ArrowLeft') prev();
+});
+</script>
+
+</body>
+</html>
